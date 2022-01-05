@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import checkIcon from '../../assets/check-icon.png'
 import profilePic from '../../assets/profile-pic.png'
 import logoMini from '../../assets/logo-mini.png'
 

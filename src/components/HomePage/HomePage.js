@@ -1,4 +1,4 @@
-/* import Link from 'react-router-dom' */
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
 
@@ -11,7 +11,9 @@ export default function HomePage() {
                 <input type="password" placeholder='senha' />
                 <button type="submit">Entrar</button>
             </Form>
-            <p>Não tem uma conta? Cadastre-se!</p>
+            <Link to="/cadastro">
+                <p>Não tem uma conta? Cadastre-se!</p>
+            </Link>
         </Container>
     )
 }
