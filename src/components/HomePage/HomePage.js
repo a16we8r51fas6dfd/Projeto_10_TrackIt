@@ -1,19 +1,60 @@
-/* import { useState } from 'react' */
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
+import Loader from "react-loader-spinner";
 
 export default function HomePage() {
-    /* const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('') */
+    const [disabled, setDisabled] = useState(false)
+    const [loginData, setLoginData] = useState({
+        email:'',
+        password:''
+    })
+    const navigate = useNavigate()
+
+    function handleLogin(event) {
+        event.preventDefault()
+
+        setDisabled(true)               
+
+        const post = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", loginData)
+
+        post.then(() => navigate('/habitos'))
+        post.catch(error => {
+            alert(error.response.data.message + ' tente novamente')
+            setDisabled(false)
+        })
+    }
 
     return(
         <Container>
             <img src={logo} alt="" />
             <Form>
-                <input type="email" placeholder='email' />
-                <input type="password" placeholder='senha' />
-                <button type="submit">Entrar</button>
+                <input
+                    value={loginData.email}
+                    type="email" 
+                    placeholder='email'
+                    disabled={disabled}
+                    onChange={(e) => setLoginData({...loginData, email:e.target.value})}
+                />
+                <input
+                    value={loginData.password}
+                    type="password" 
+                    placeholder='senha' 
+                    disabled={disabled}
+                    onChange={(e) => setLoginData({...loginData, password:e.target.value})}
+                />
+                <button onClick={handleLogin} type="submit">
+                    {disabled ? 
+                        <Loader
+                            type="ThreeDots"
+                            color="#FFF"
+                            height={13}
+                            width={51}
+                        /> : "Entrar"
+                    }
+                </button>
             </Form>
             <Link to="/cadastro">
                 <p>Não tem uma conta? Cadastre-se!</p>
