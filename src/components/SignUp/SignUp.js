@@ -1,19 +1,82 @@
-/* import Link from 'react-router-dom' */
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from "react-loader-spinner";
 
 export default function SingUp() {
+    const [disabled, setDisabled] = useState(false)
+    const [userData, setUserData] = useState({
+        email:'',
+        name:'',
+        password:'',
+        image:''
+    })
+    const navigate = useNavigate()
+
+    function handleSubmit(event) {
+        event.preventDefault()
+
+        setDisabled(true)               
+
+        const post = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", userData)
+
+        post.then(() => navigate('/'))
+        post.catch(error => {
+            alert(error.response.data.message + ' tente novamente')
+            setDisabled(false)
+        })
+    }
+
     return(
         <Container>
             <img src={logo} alt="" />
             <Form>
-                <input type="email" placeholder='email' />
-                <input type="password" placeholder='senha' />
-                <input type="text" placeholder='nome'/>
-                <input type="text" placeholder='foto' />
-                <button type="submit">Cadastrar</button>
+                <input
+                    value={userData.email}
+                    type="email" 
+                    placeholder='email'
+                    disabled={disabled}
+                    onChange={(e) => setUserData({...userData, email:e.target.value})} 
+                />
+                <input
+                    value={userData.password}
+                    type="password" 
+                    placeholder='senha'
+                    disabled={disabled}
+                    onChange={(e) => setUserData({...userData, password:e.target.value})} 
+                />
+                <input 
+                    value={userData.name}
+                    type="text" 
+                    placeholder='nome'
+                    disabled={disabled}
+                    onChange={(e) => setUserData({...userData, name:e.target.value})} 
+                />
+                <input 
+                    value={userData.image}
+                    type="text" 
+                    placeholder='foto' 
+                    disabled={disabled}
+                    onChange={(e) => setUserData({...userData, image:e.target.value})}  
+                />
+                <button onClick={handleSubmit} type="submit">
+                    {disabled ? 
+                        <Loader
+                            type="ThreeDots"
+                            color="#FFF"
+                            height={13}
+                            width={51}
+                        /> : "Cadastrar"
+                    }
+                </button>
             </Form>
-            <p>Já tem uma conta? Faça login!</p>
+            <Link to='/'>
+                <p>Já tem uma conta? Faça login!</p>
+            </Link>
         </Container>
     )
 }
