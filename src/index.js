@@ -7,18 +7,21 @@ import Today from './components/Today/Today'
 import History from './components/History/History'
 import './styles/reset.css'
 import './styles/style.css'
-
+import { AuthProvider } from "./Context/AuthContext"
 
 function App() {
+    
     return (
         <BrowserRouter>
-            <Routes>
-                <Route exact path='/' element={<HomePage />}/>
-                <Route exact path='/cadastro' element={<SingUp />} />
-                <Route exact path='/habitos' element={<Habits />} />
-                <Route exact path='/hoje' element={<Today/>} />
-                <Route exact path='/historico' element={<History/>} />
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route exact path='/' element={<HomePage />}/>
+                    <Route exact path='/cadastro' element={<SingUp />} />
+                    <Route exact path='/habitos' element={<Habits />} />
+                    <Route exact path='/hoje' element={<Today/>} />
+                    <Route exact path='/historico' element={<History/>} />
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     )
 }

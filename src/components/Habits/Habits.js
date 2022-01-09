@@ -1,17 +1,16 @@
 import styled from "styled-components";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import profilePic from '../../assets/profile-pic.png'
-import logoMini from '../../assets/logo-mini.png'
+import { Context } from "../../Context/AuthContext";
+import { useContext } from "react";
+import Menu from "../Menus/Footer";
+import Header from "../Menus/Header";
 
 export default function Habits() {
 
+    const { token, userData } = useContext(Context)
+    
     return(
         <Container>
-            <Header>
-                <img src={logoMini} alt="" />
-                <img src={profilePic} alt="" />
-            </Header>
+            <Header />
             <Content>
                 <ContentHeader>
                     <span>Meus Hábitos</span>
@@ -30,29 +29,12 @@ export default function Habits() {
                     </DaysButtons>
                     <CreateButton>
                         <span>Cancelar</span>
-                        <button>Salvar</button>
+                        <button onClick={() => console.log(token, userData)}>Salvar</button>
                     </CreateButton>
                 </CreateHabitCard>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </Content>
-            <Footer>
-                <span>Hábitos</span>
-                <ProgressBarContainer>
-                    <CircularProgressbar
-                        value={"66"}
-                        text={`Hoje`}
-                        background
-                        backgroundPadding={6}
-                        styles={buildStyles({
-                        backgroundColor: "#52B6FF",
-                        textColor: "#fff",
-                        pathColor: "#fff",
-                        trailColor: "transparent"
-                        })}
-                    />
-                </ProgressBarContainer>
-                <span>Histórico</span>
-            </Footer>
+            <Menu />
         </Container>
     )
 }
@@ -62,57 +44,6 @@ const Container = styled.div`
     min-width: 100vw;
 
     background-color: #E5E5E5;
-`
-
-const Header = styled.div`
-    width: 100%;
-    height: 70px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 0 18px;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    background-color: #126BA5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-`
-
-const Footer = styled.div`
-    width: 100%;
-    height: 75px;
-
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    background-color: #FFFFFF;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    span {
-        font-family: Lexend Deca;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 17.976px;
-        line-height: 22px;
-        text-align: center;
-
-        color: #52B6FF;
-    }
-`
-
-const ProgressBarContainer = styled.div`
-    width: 91px;
-    height: 91px;
-
-    margin-bottom: 40px;
 `
 
 const Content = styled.div`

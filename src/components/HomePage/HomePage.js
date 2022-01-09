@@ -3,9 +3,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
-import Loader from "react-loader-spinner";
+import Loader from "react-loader-spinner"
+import { Context  } from '../../Context/AuthContext'
+import { useContext } from 'react'
 
 export default function HomePage() {
+    const { setToken, userData, setUserData } = useContext(Context)
     const [disabled, setDisabled] = useState(false)
     const [loginData, setLoginData] = useState({
         email:'',
@@ -20,7 +23,11 @@ export default function HomePage() {
 
         const post = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", loginData)
 
-        post.then(() => navigate('/habitos'))
+        post.then(response =>{
+            setToken(response.data.token)
+            setUserData({...userData, name:response.data.name, image:response.data.image})
+            navigate('/habitos')            
+        })
         post.catch(error => {
             alert(error.response.data.message + ' tente novamente')
             setDisabled(false)
