@@ -6,10 +6,13 @@ import { Context } from "../../Context/AuthContext";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import axios from "axios";
-import dayjs from "dayjs";
+import * as dayjs from 'dayjs';
 
 export default function Today() {
-    let day = dayjs().format("dddd, DD/MM")
+
+    require('dayjs/locale/pt-br')
+
+    let day = dayjs().locale('pt-br').format(`dddd, DD/MM`)
 
     const { token , progress,  setProgress } = useContext(Context)
     const [habits, setHabits] = useState([])

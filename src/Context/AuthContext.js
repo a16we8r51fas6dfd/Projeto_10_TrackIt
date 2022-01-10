@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
 const Context = createContext()
 
@@ -10,6 +10,8 @@ function AuthProvider({ children }) {
         image: ''
     })
     const [progress, setProgress] = useState(0)
+
+
 
     return (
         <Context.Provider value={{ token, setToken, userData, setUserData, progress, setProgress }}>

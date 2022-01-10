@@ -17,6 +17,7 @@ export default function Habits() {
     const [creatingHabit, setCreatingHabit] = useState(false)
     const [pageReload, setPageReload] = useState(false)
     const [disabled, setDisabled] = useState(false)
+
     
     useEffect(() => {
         const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
