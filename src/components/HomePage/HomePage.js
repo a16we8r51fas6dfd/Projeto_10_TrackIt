@@ -26,7 +26,7 @@ export default function HomePage() {
         post.then(response =>{
             setToken(response.data.token)
             setUserData({...userData, name:response.data.name, image:response.data.image})
-            navigate('/habitos')            
+            navigate('/hoje')            
         })
         post.catch(error => {
             alert(error.response.data.message + ' tente novamente')
@@ -123,7 +123,7 @@ const Form = styled.form`
         font-size: 19.976px;
         line-height: 25px;
 
-        color: #DBDBDB
+        color: #666666
     }
     button{
         width: 100%;

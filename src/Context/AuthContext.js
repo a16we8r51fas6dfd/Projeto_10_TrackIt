@@ -9,9 +9,10 @@ function AuthProvider({ children }) {
         name: '',
         image: ''
     })
+    const [progress, setProgress] = useState(0)
 
     return (
-        <Context.Provider value={{ token, setToken, userData, setUserData }}>
+        <Context.Provider value={{ token, setToken, userData, setUserData, progress, setProgress }}>
             {children}
         </Context.Provider>
     )

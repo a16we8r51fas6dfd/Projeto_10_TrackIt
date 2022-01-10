@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
+import { Context } from '../../Context/AuthContext';
+import { useContext } from 'react';
 
 export default function Menu() {
 
+    const { progress } = useContext(Context)
     const navigate = useNavigate();
 
     return (
@@ -12,7 +15,7 @@ export default function Menu() {
             <span onClick={() => navigate('/habitos')}>Hábitos</span>
             <ProgressBarContainer onClick={() => navigate('/hoje')}>
                 <CircularProgressbar
-                    value={"66"}
+                    value={progress}
                     text={`Hoje`}
                     background
                     backgroundPadding={6}
