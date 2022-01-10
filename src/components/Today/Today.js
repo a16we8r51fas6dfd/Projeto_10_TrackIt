@@ -121,7 +121,7 @@ const Content = styled.div`
 
     margin-top: 70px;
     
-    padding-bottom: 110px;
+    padding-bottom: 90px;
     padding-left: 17px;
     padding-right: 17px;
 `

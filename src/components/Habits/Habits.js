@@ -6,6 +6,7 @@ import Header from "../Menus/Header";
 import axios from "axios";
 import { useState } from "react";
 import Delete from '../../assets/delete.png'
+import Loader from "react-loader-spinner"
 
 export default function Habits() {
 
@@ -15,6 +16,7 @@ export default function Habits() {
     const [habitDays, setHabitDays] = useState([])
     const [creatingHabit, setCreatingHabit] = useState(false)
     const [pageReload, setPageReload] = useState(false)
+    const [disabled, setDisabled] = useState(false)
     
     useEffect(() => {
         const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
@@ -32,6 +34,8 @@ export default function Habits() {
     }, [token, pageReload])
 
     function createHabit() {
+        setDisabled(true)
+
         const habit = {
             name: habitName,
             days: habitDays
@@ -43,12 +47,14 @@ export default function Habits() {
         })
 
         promisse.then(response => {
+            setDisabled(false)
             setHabitDays([])
             setHabitName('')
             setCreatingHabit(false)
             setPageReload(true)
         })
         promisse.catch(error => {
+            setDisabled(false)
             alert(error.message)
         })
     }
@@ -90,23 +96,34 @@ export default function Habits() {
                 { creatingHabit === true ? 
                     <CreateHabitCard>
                         <input
+                            disabled={disabled}
                             value={habitName} 
                             type="text" 
                             placeholder="nome do hábito"
                             onChange={(e) => setHabitName(e.target.value)}
                         />
                         <DaysButtons>
-                            <Buttons testezinho={habitDays.includes('0') ? 'true' : 'false'} value={0} onClick={handleClick}>D</Buttons>
-                            <Buttons testezinho={habitDays.includes('1') ? 'true' : 'false'} value={1} onClick={handleClick}>S</Buttons>
-                            <Buttons testezinho={habitDays.includes('2') ? 'true' : 'false'} value={2} onClick={handleClick}>T</Buttons>
-                            <Buttons testezinho={habitDays.includes('3') ? 'true' : 'false'} value={3} onClick={handleClick}>Q</Buttons>
-                            <Buttons testezinho={habitDays.includes('4') ? 'true' : 'false'} value={4} onClick={handleClick}>Q</Buttons>
-                            <Buttons testezinho={habitDays.includes('5') ? 'true' : 'false'} value={5} onClick={handleClick}>S</Buttons>
-                            <Buttons testezinho={habitDays.includes('6') ? 'true' : 'false'} value={6} onClick={handleClick}>S</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('0') ? 'true' : 'false'} value={0} onClick={handleClick}>D</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('1') ? 'true' : 'false'} value={1} onClick={handleClick}>S</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('2') ? 'true' : 'false'} value={2} onClick={handleClick}>T</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('3') ? 'true' : 'false'} value={3} onClick={handleClick}>Q</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('4') ? 'true' : 'false'} value={4} onClick={handleClick}>Q</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('5') ? 'true' : 'false'} value={5} onClick={handleClick}>S</Buttons>
+                            <Buttons disabled={disabled} testezinho={habitDays.includes('6') ? 'true' : 'false'} value={6} onClick={handleClick}>S</Buttons>
                         </DaysButtons>
                         <CreateButton>
                             <span onClick={() => setCreatingHabit(false)}>Cancelar</span>
-                            <button onClick={createHabit}>Salvar</button>
+                            <button onClick={createHabit}>
+                                    {disabled ?
+                                            <Loader
+                                                type="ThreeDots"
+                                                color="#FFF"
+                                                height={13}
+                                                width={51}
+                                            />
+                                        : "Salvar"
+                                    }
+                                </button>
                         </CreateButton>
                     </CreateHabitCard>
                 :
@@ -152,7 +169,7 @@ const Content = styled.div`
     width: 100%;
 
     margin-top: 70px;
-    padding-bottom: 110px;
+    padding-bottom: 90px;
 
     padding-left: 17px;
     padding-right: 17px;
