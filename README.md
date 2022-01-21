@@ -11,7 +11,7 @@ a habit management app
 - list of all created habits
 - habit schedule
 
-## Tecnologies
+## Technologies
 
 - html5
 - css3
